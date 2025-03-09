@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stagehand MCP Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .product {
+            display: flex;
+            gap: 15px;
+        }
+        .product-image {
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-details {
+            flex: 1;
+        }
+        .search-box {
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stagehand MCP Test Page</h1>
+    
+    <div class="container">
+        <div class="card">
+            <h2>Search</h2>
+            <input type="text" class="search-box" id="searchInput" placeholder="Enter search term...">
+            <button class="button" id="searchButton">Search</button>
+            <div class="result" id="searchResult"></div>
+        </div>
+        
+        <div class="card">
+            <h2>Products</h2>
+            
+            <div class="product">
+                <div class="product-image">Product A</div>
+                <div class="product-details">
+                    <h3>Premium Headphones</h3>
+                    <p>Price: $129.99</p>
+                    <p>Rating: 4.5/5</p>
+                    <button class="button">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product">
+                <div class="product-image">Product B</div>
+                <div class="product-details">
+                    <h3>Wireless Mouse</h3>
+                    <p>Price: $49.99</p>
+                    <p>Rating: 4.2/5</p>
+                    <button class="button">Add to Cart</button>
+                </div>
+            </div>
+            
+            <div class="product">
+                <div class="product-image">Product C</div>
+                <div class="product-details">
+                    <h3>Mechanical Keyboard</h3>
+                    <p>Price: $89.99</p>
+                    <p>Rating: 4.8/5</p>
+                    <button class="button">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Form Test</h2>
+            <form id="testForm">
+                <div style="margin-bottom: 10px;">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="3"></textarea>
+                </div>
+                <button type="submit" class="button">Submit</button>
+            </form>
+            <div class="result" id="formResult"></div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const searchTerm = document.getElementById('searchInput').value;
+            const resultDiv = document.getElementById('searchResult');
+            resultDiv.style.display = 'block';
+            
+            if (searchTerm.trim() === '') {
+                resultDiv.textContent = 'Please enter a search term.';
+            } else {
+                resultDiv.textContent = `Showing results for: "${searchTerm}"`;
+            }
+        });
+        
+        // Form functionality
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            const resultDiv = document.getElementById('formResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h3>Form Submitted</h3>
+                <p><strong>Name:</strong> ${name || 'Not provided'}</p>
+                <p><strong>Email:</strong> ${email || 'Not provided'}</p>
+                <p><strong>Message:</strong> ${message || 'Not provided'}</p>
+            `;
+        });
+    </script>
+</body>
+</html>
