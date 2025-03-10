@@ -4,7 +4,7 @@ A Model Context Protocol (MCP) server that provides AI-driven web browser automa
 
 <div align="center">
 
-[![Build Status](https://github.com/2702-labs/stagehand-mcp/actions/workflows/build.yml/badge.svg)](https://github.com/2702-labs/stagehand-mcp/actions/workflows/build.yml)
+[![Build Status](https://github.com/3MUl0R/stagehand-mcp/actions/workflows/build.yml/badge.svg)](https://github.com/3MUl0R/stagehand-mcp/actions/workflows/build.yml)
 [![Node.js 18](https://img.shields.io/badge/Node.js-18-green.svg)](https://nodejs.org/en/)
 [![Node.js 20](https://img.shields.io/badge/Node.js-20-green.svg)](https://nodejs.org/en/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -26,7 +26,7 @@ A Model Context Protocol (MCP) server that provides AI-driven web browser automa
 
 ```bash
 # Clone the repository
-git clone https://github.com/2702-labs/stagehand-mcp.git
+git clone https://github.com/3MUl0R/stagehand-mcp.git
 cd stagehand-mcp
 
 # Install dependencies
