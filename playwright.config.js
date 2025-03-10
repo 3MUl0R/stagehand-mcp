@@ -20,7 +20,9 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   
   /* Reporter to use */
-  reporter: process.env.CI ? 'github' : 'list',
+  reporter: process.env.CI
+    ? [['list'], ['html', { outputFolder: 'test-results/html-report' }], ['github']]
+    : [['list'], ['html', { outputFolder: 'test-results/html-report' }]],
   
   /* Shared settings for all the projects below */
   use: {
