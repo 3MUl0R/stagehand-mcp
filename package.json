@@ -14,7 +14,9 @@
     "build": "tsc && shx chmod +x dist/index.js",
     "prepare": "npm run build",
     "watch": "tsc --watch",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "npx playwright test",
+    "test:ci": "npx playwright test --reporter=github"
   },
   "dependencies": {
     "@browserbasehq/stagehand": "^1.12.0",

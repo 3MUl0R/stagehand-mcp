@@ -1,0 +1,107 @@
+name: Build Verification
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Check TypeScript compilation
+      run: npx tsc --noEmit
+    
+    - name: Build
+      run: npm run build
+    
+    - name: Verify executable permission
+      run: |
+        if [ -f "dist/index.js" ]; then
+          if [ -x "dist/index.js" ]; then
+            echo "✅ dist/index.js is executable"
+          else
+            echo "❌ dist/index.js is not executable"
+            exit 1
+          fi
+        else
+          echo "❌ dist/index.js does not exist after build"
+          exit 1
+        fi
+    
+    - name: Validate package exports
+      run: |
+        node -e "
+        const fs = require('fs');
+        const path = require('path');
+        
+        // Check if the dist directory exists and has files
+        if (!fs.existsSync('dist') || fs.readdirSync('dist').length === 0) {
+          console.error('❌ dist directory is missing or empty');
+          process.exit(1);
+        }
+        
+        // Check if index.js exists in dist
+        if (!fs.existsSync(path.join('dist', 'index.js'))) {
+          console.error('❌ dist/index.js is missing');
+          process.exit(1);
+        }
+        
+        // Check if utils.js exists in dist
+        if (!fs.existsSync(path.join('dist', 'utils.js'))) {
+          console.error('❌ dist/utils.js is missing');
+          process.exit(1);
+        }
+        
+        console.log('✅ All expected built files are present');
+        "
+    
+  playwright-test:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Build
+      run: npm run build
+      
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps chromium
+      
+    - name: Run Playwright tests
+      run: npx playwright test
+      
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30

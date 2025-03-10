@@ -2,6 +2,8 @@
 
 A Model Context Protocol (MCP) server that provides AI-driven web browser automation using the Stagehand library with local browser support.
 
+[![Build Verification](https://github.com/yourusername/stagehand-mcp/actions/workflows/build.yml/badge.svg)](https://github.com/yourusername/stagehand-mcp/actions/workflows/build.yml)
+
 ## Features
 
 - **Browser Navigation**: Open and navigate to any URL
@@ -307,6 +309,44 @@ The `test-page.html` file provides a simple web interface with:
 - Form testing
 
 This allows testing all Stagehand MCP capabilities in a controlled environment.
+
+## Continuous Integration
+
+This project uses GitHub Actions for continuous integration to verify builds when changes are pushed.
+
+### GitHub Actions Workflow
+
+The `.github/workflows/build.yml` file defines a CI workflow that:
+
+1. **Build Verification**
+   - Runs on Node.js 18.x and 20.x
+   - Installs dependencies
+   - Checks TypeScript compilation
+   - Builds the project
+   - Verifies executable permissions on the output file
+   - Validates that all expected built files are present
+
+2. **Playwright Tests**
+   - Runs a basic module import test to verify the built package can be imported
+   - Uses Playwright to ensure basic functionality
+
+### Running Tests Locally
+
+You can run the same checks locally before pushing:
+
+```bash
+# Check TypeScript compilation
+npx tsc --noEmit
+
+# Build the project
+npm run build
+
+# Verify executable permissions
+ls -la dist/index.js  # Check if executable bit is set
+
+# Run any Playwright tests
+NODE_OPTIONS=--experimental-vm-modules npx playwright test
+```
 
 ## Advanced Features
 
